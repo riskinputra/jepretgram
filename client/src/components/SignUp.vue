@@ -9,11 +9,11 @@
             <v-flex xs10 md4 offset-xs1 offset-md4>
               <v-card light color="white" flat tile>
                 <v-card-text>
-                  <login-from></login-from>
+                  <signup-from></signup-from>
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-text>
-                  Don't have an account? <router-link to="signup">Sign up</router-link>
+                  Have an account? <router-link to="login">Log in</router-link>
                 </v-card-text>
               </v-card>
             </v-flex>
@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import LoginForm from './Login-Form'
+import SignUpForm from './SignUp-Form'
 
 export default {
   components: {
-    'login-from': LoginForm
+    'signup-from': SignUpForm
   }  
 }
 </script>
