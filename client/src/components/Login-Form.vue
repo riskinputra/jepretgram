@@ -72,7 +72,7 @@ export default {
         .then(result => {
           console.log(result.data)
           localStorage.setItem('token', result.data.token)
-          // location.reload()
+          this.$router.replace('/')
         })
         .catch(err => {
           this.msgError = 'E-mail or Password Wrong !!! Please Try Again !'

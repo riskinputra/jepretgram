@@ -30,7 +30,12 @@ import LoginForm from './Login-Form'
 export default {
   components: {
     'login-from': LoginForm
-  }  
+  },
+  created () {
+    if (localStorage.getItem('token')) {
+      this.$router.replace('/')
+    }
+  }
 }
 </script>
 
