@@ -11,6 +11,8 @@ const index         = require('./routes/index');
 const signup        = require('./routes/signup');
 const signin        = require('./routes/signin');
 const following        = require('./routes/following');
+const posts        = require('./routes/posts');
+const comments        = require('./routes/comments');
 // =========================================================
 const app = express();
 require('dotenv').config()
@@ -40,6 +42,8 @@ app.use('/', index);
 app.use('/signup', signup);
 app.use('/signin', signin);
 app.use('/following', following);
+app.use('/posts', posts);
+app.use('/comments', comments);
 // =========================================================
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
