@@ -9,24 +9,28 @@ class Signin {
       email: req.body.email
     })
     .then( dataUser => {
-      bcrypt.compare(req.body.password, dataUser.password)
-      .then(result => {
-        if(result){
-          jwt.sign({id: dataUser.id, username: dataUser.username, email: req.body.email}, process.env.SECRET_KEY, function(err, token){
-            // console.log(token);
-            res.status(200).json({
-              message: 'User Found',
-              token: token
-            })
+      if (!dataUser) {
+        res.status(500).json({
+          message: 'E-mail Not Match'
+        })
+      }
+      let temp = bcrypt.compare(req.body.password, dataUser.password)
+      if (!temp) {
+        res.status(500).json({
+          message : "Password Incorrect"
+        })
+      } else {
+        jwt.sign({id: dataUser.id, username: dataUser.username, email: req.body.email}, process.env.SECRET_KEY, function(err, token){
+          // console.log(token);
+          res.status(200).json({
+            message: 'User Found',
+            token: token
           })
-        }
-      })
-      .catch(err => {
-        console.log(err)
-        res.status(500).send(err)
-      })
+        })
+      }
     })
     .catch(err => {
+      console.log(err)
       res.status(500).send(err)
     })
   }
