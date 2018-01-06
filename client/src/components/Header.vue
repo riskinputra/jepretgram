@@ -64,5 +64,8 @@ export default {
   }
   /* Phone landscape and smaller*/
   @media (max-width: 767px) {
+    #toolbar {
+      padding: 0;
+    }
   }
 </style>

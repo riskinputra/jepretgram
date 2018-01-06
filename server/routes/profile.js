@@ -3,4 +3,4 @@ const router = express.Router();
 const ProfileController = require('../controllers/profile')
 
 module.exports = router 
-  .get('/', ProfileController.getProfile)
+  .get('/:id', ProfileController.getProfile)

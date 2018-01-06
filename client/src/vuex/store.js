@@ -14,7 +14,10 @@ export const store = new Vuex.Store({
   state: {
     homeTimeline: [],
     exploreTimeline: [],
-    profileTimeline: []
+    profileTimeline: [],
+    profileAccount: [],
+    followers: [],
+    following: []
   },
   mutations: {
     setHomeTimeline (state, payload) {
@@ -29,6 +32,16 @@ export const store = new Vuex.Store({
     setProfileTimeline (state, payload) {
       console.log('setProfileTimeline', payload)
       state.profileTimeline = payload.data
+    },
+    setProfileAccount (state, payload) {
+      state.profileAccount = payload.data
+      console.log('setProfileAccount', state.profileAccount)
+    },
+    setFollowing (state, payload) {
+      state.following = payload.data
+    },
+    setFollowers (state, payload) {
+      state.followers = payload.data
     }
   },
   actions: {
@@ -72,6 +85,19 @@ export const store = new Vuex.Store({
         .catch(err => console.log(err))
       }
     },
+    getProfileAccount ({ commit }) {
+      if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        http.get(`/profile/${userId}`)
+        .then(({ data }) => {
+          console.log('getProfileAccount', data)
+          commit('setProfileAccount', data)
+        })
+        .catch(err => console.log(err))
+      }
+    },
     addLike ({ commit }, postId) {
       if (localStorage.getItem('token')) {
         const token = localStorage.getItem('token')
@@ -83,6 +109,32 @@ export const store = new Vuex.Store({
         .then(({data}) => {
           console.log('data hasil add like', data)
           commit('saveLike', data)
+        })
+        .catch(err => console.log(err))
+      }
+    },
+    getFollowing ({ commit }) {
+      if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        http.get(`/following/${userId}`)
+        .then(({ data }) => {
+          console.log('getFollowing', data)
+          commit('setFollowing', data)
+        })
+        .catch(err => console.log(err))
+      }
+    },
+    getFollowers ({ commit }) {
+      if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        http.get(`/following/followers/${userId}`)
+        .then(({ data }) => {
+          console.log('getFollowers', data)
+          commit('setFollowers', data)
         })
         .catch(err => console.log(err))
       }

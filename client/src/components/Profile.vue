@@ -3,11 +3,11 @@
     <header-toolbar></header-toolbar>
     <v-content>
       <v-container grid-list-lg>
-        <section>
+        <section style="padding:20px 0;">
           <profile-head></profile-head>
-          <v-divider></v-divider>
         </section>
-        <section style="margin-top:20px;">
+        <section style="margin-top:10px;">
+          <v-divider style="margin-bottom:30px;"></v-divider>
           <profile-timeline></profile-timeline>
         </section>
       </v-container>

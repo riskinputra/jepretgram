@@ -2,12 +2,6 @@
   <v-layout row wrap id="home-timeline-list">
     <v-flex md4 xs12 v-for="item in profileTimeline" :key="item.id">
       <v-card>
-        <v-card-text>
-          <v-avatar size="36px" slot="activator">
-            <img :src="item.userId.image" alt="">
-          </v-avatar>
-          <b>&nbsp;{{item.userId.username}}</b>
-        </v-card-text>
         <v-card-media
           :src="item.image"
           height="300px"
