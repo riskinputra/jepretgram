@@ -147,7 +147,7 @@ export const store = new Vuex.Store({
         const userId = decode.id
         let newData = new FormData()
         console.log('newData', newData)
-        newData.append('description', newPost.description)
+        newData.append('caption', newPost.description)
         newData.append('image', newPost.image)
         newData.append('userId', userId)
         http.post(`/posts`, newData, {
@@ -164,6 +164,17 @@ export const store = new Vuex.Store({
           console.log(err)
         })
       }
+    },
+    deletePost ({ commit }, postId) {
+      console.log('postId', postId)
+      http.delete(`/posts/${postId}`)
+      .then(({data}) => {
+        console.log('DeletePost', data)
+        location.reload()
+      })
+      .catch(err => {
+        console.log(err)
+      })
     }
   }
 })

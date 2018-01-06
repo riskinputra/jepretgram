@@ -9,4 +9,5 @@ module.exports = router
   .get('/follow/:id', PostController.getPostFollow)
   .put('/like/:id', PostController.postLike)
   .post('/', images.multer.single('image'), images.sendUploadToGCS, PostController.addPost)
+  .delete('/:id', PostController.deletePost)
   // .put()
