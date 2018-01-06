@@ -5,6 +5,7 @@ const images = require('../helpers/images')
 
 module.exports = router 
   .get('/', PostController.getPost)
+  .get('/follow/:id', PostController.getPostFollow)
   .put('/like/:id', PostController.postLike)
   .post('/', images.multer.single('image'), images.sendUploadToGCS, PostController.addPost)
   // .put()

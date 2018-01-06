@@ -1,9 +1,15 @@
 <template>
   <v-layout row wrap id="home-timeline-list">
-    <v-flex md4 xs12 v-for="item in homeTimeline" :key="item.id">
+    <v-flex md4 xs12 v-for="item in exploreTimeline" :key="item.id">
       <v-card>
+        <v-card-text>
+          <v-avatar size="36px" slot="activator">
+            <img :src="item.userId.image" alt="">
+          </v-avatar>
+          <b>&nbsp;{{item.userId.username}}</b>
+        </v-card-text>
         <v-card-media
-          src="item.image"
+          :src="item.image"
           height="300px"
         >
         </v-card-media>
@@ -11,7 +17,7 @@
           <v-btn icon>
             <v-icon color="red">favorite</v-icon>
           </v-btn>
-          <p id="likes">29 Likes</p>
+          <p id="likes">{{item.like.length}} Likes</p>
           <v-spacer></v-spacer>
           <v-btn icon>
             <v-icon color="purple">comment</v-icon>
@@ -19,8 +25,8 @@
         </v-card-actions>
         <v-divider></v-divider>
         <v-card-text>
-           <b>Caption ..</b>
-            {{item.text}}
+           <b>{{item.userId.username}}&nbsp;</b>
+            {{item.caption}}
           </v-card-text>
       </v-card>
     </v-flex>
@@ -37,16 +43,16 @@ export default {
     }
   },
   created () {
-    this.getHomeTimeline()
+    this.getExplore()
   },
   methods: {
     ...mapActions([
-      'getHomeTimeline'
+      'getExplore'
     ])
   },
   computed: {
     ...mapState([
-      'homeTimeline'
+      'exploreTimeline'
     ])
   }
 }

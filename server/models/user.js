@@ -20,6 +20,10 @@ const usersSchema = new Schema({
     type    : String,
     default : 'https://storage.googleapis.com/rnp-jepretgram/user.png'
   },
+  follow    : [{
+    type      : Schema.Types.ObjectId,
+    ref       : 'User'
+  }],
   createdAt : {
     type      : Date,
     default   : new Date()

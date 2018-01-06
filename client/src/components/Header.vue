@@ -1,13 +1,18 @@
 <template>
   <v-toolbar id="toolbar" fixed color='white toolbar' light app absolute clipped-left>
-    <v-btn icon>
-      <router-link to="Home"><v-icon color="indigo">home</v-icon></router-link>
-    </v-btn>
+
+    <router-link to="Home">
+      <v-btn icon>
+        <v-icon color="indigo">home</v-icon>
+      </v-btn>
+    </router-link>
     <v-toolbar-title class="text">Jepretgram</v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn icon>
-      <router-link to="explore"><v-icon color="cyan">public</v-icon></router-link>
-    </v-btn>
+    <router-link to="explore">
+      <v-btn icon>
+        <v-icon color="cyan">public</v-icon>
+      </v-btn>
+    </router-link>
     <v-btn icon>
       <v-icon color="green">notifications</v-icon>
     </v-btn>
@@ -21,6 +26,12 @@
 export default {
   data () {
     return {}
+  },
+  methods: {
+    // explore () {
+    //   console.log('masuk')
+    //   this.$router.replace('/explore')
+    // }
   }
 }
 </script>
