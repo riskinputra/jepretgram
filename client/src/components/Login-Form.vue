@@ -43,6 +43,7 @@ import axios from 'axios'
 
 export default {
   data () {
+    /* eslint-disable no-alert, no-console */
     return {
       e1: false,
       valid: true,
@@ -53,13 +54,14 @@ export default {
       email: '',
       emailRules: [
         (v) => !!v || 'E-mail is required',
-        (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid' // eslint-disable-line no-console
+        (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
       ],
       snackbar: false,
       y: 'top',
       timeout: 3000,
       msgError: ''
     }
+    /* eslint-enable no-alert, no-console */
   },
   methods: {
     submit () {

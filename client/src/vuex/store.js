@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import jwt_decode from 'jwt-decode'
+import jwtDecode from 'jwt-decode'
 
 Vue.use(Vuex)
 
@@ -29,8 +29,9 @@ export const store = new Vuex.Store({
     getHomeTimeline ({ commit }) {
       if (localStorage.getItem('token')) {
         const token = localStorage.getItem('token')
-        const decode = jwt_decode(token)
+        const decode = jwtDecode(token)
         const userId = decode.id
+        console.log(decode)
         http.get(`/posts/follow/${userId}`)
         .then(({ data }) => {
           console.log('getHouse', data)

@@ -24,10 +24,8 @@ class PostController {
     .populate('followingId')
     .exec()
     .then(result => {
-      let newResult = []
       for(let i = 0; i < result.length; i++){
-        console.log(result[i].followingId)
-        Post.find({userId:result[i].followingId})
+        Post.find({userId:result[i].followingId}).sort( { createdAt: -1 } )
         .populate('userId')
         .exec()
         .then(dataPost => {
@@ -35,6 +33,9 @@ class PostController {
             message: 'Post Follow',
             data: dataPost
           })
+        })
+        .catch(err => {
+          res.status(500).send(err)
         })
       }
     })
