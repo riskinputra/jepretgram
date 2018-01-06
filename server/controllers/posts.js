@@ -3,7 +3,7 @@ const Following    = require('../models/following')
 
 class PostController {
   static getPost(req, res) {
-    Post.find().sort( { createdAt: -1 } )
+    Post.find({userId: {$ne: req.params.id}}).sort( { createdAt: -1 } )
     .populate('userId')
     .populate('like')
     .exec()
@@ -63,6 +63,7 @@ class PostController {
   }
 
   static postLike(req, res) {
+    console.log(req.body)
     Post.findById(req.params.id)
     .then(dataLike => {
       dataLike.like.push(req.body.like)

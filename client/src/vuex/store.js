@@ -19,6 +19,7 @@ export const store = new Vuex.Store({
     setHomeTimeline (state, payload) {
       console.log('setHomeTimeline', payload)
       state.homeTimeline = payload.data
+      console.log(state.homeTimeline[0].like)
     },
     setExplore (state, payload) {
       console.log('setExplore', payload)
@@ -41,12 +42,32 @@ export const store = new Vuex.Store({
       }
     },
     getExplore ({ commit }) {
-      http.get('/posts')
-      .then(({ data }) => {
-        console.log('getExplore', data)
-        commit('setExplore', data)
-      })
-      .catch(err => console.log(err))
+      if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        http.get(`/posts/${userId}`)
+        .then(({ data }) => {
+          console.log('getExplore', data)
+          commit('setExplore', data)
+        })
+        .catch(err => console.log(err))
+      }
+    },
+    addLike ({ commit }, postId) {
+      if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        console.log(postId)
+        console.log(userId)
+        http.put(`/posts/like/${postId}`, {like: userId})
+        .then(({data}) => {
+          console.log('data hasil add like', data)
+          commit('saveLike', data)
+        })
+        .catch(err => console.log(err))
+      }
     }
   }
 })
