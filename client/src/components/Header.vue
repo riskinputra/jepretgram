@@ -16,9 +16,11 @@
     <v-btn icon>
       <v-icon color="green">notifications</v-icon>
     </v-btn>
-    <v-btn icon>
-      <v-icon color="pink">face</v-icon>
-    </v-btn>
+    <router-link to="profile">
+      <v-btn icon>
+        <v-icon color="pink">face</v-icon>
+      </v-btn>
+    </router-link>
   </v-toolbar>
 </template>
 

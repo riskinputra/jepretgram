@@ -13,7 +13,8 @@ export const store = new Vuex.Store({
   strict: true,
   state: {
     homeTimeline: [],
-    exploreTimeline: []
+    exploreTimeline: [],
+    profileTimeline: []
   },
   mutations: {
     setHomeTimeline (state, payload) {
@@ -24,6 +25,10 @@ export const store = new Vuex.Store({
     setExplore (state, payload) {
       console.log('setExplore', payload)
       state.exploreTimeline = payload.data
+    },
+    setProfileTimeline (state, payload) {
+      console.log('setProfileTimeline', payload)
+      state.profileTimeline = payload.data
     }
   },
   actions: {
@@ -50,6 +55,19 @@ export const store = new Vuex.Store({
         .then(({ data }) => {
           console.log('getExplore', data)
           commit('setExplore', data)
+        })
+        .catch(err => console.log(err))
+      }
+    },
+    getProfileTimeline ({ commit }) {
+      if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        http.get(`/posts/profile/${userId}`)
+        .then(({ data }) => {
+          console.log('getProfileTimeline', data)
+          commit('setProfileTimeline', data)
         })
         .catch(err => console.log(err))
       }

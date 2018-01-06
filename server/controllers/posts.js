@@ -44,6 +44,21 @@ class PostController {
     })
   }
 
+  static getPostProfile(req, res) {
+    Post.find({userId: req.params.id})
+    .populate('userId')
+    .exec()
+    .then(dataPost => {
+      res.status(200).json({
+        message: 'Post Follow',
+        data: dataPost
+      })
+    })
+    .catch(err => {
+      res.status(500).send(err)
+    })
+  }
+
   static addPost(req, res) {
     let dataPost = new Post({
       userId: req.body.userId,
