@@ -21,11 +21,16 @@
         <v-icon color="pink">face</v-icon>
       </v-btn>
     </router-link>
+    <header-post></header-post> 
   </v-toolbar>
 </template>
 
 <script>
+import HeaderPost from './Header-Post'
 export default {
+  components: {
+    'header-post': HeaderPost
+  },
   data () {
     return {}
   },
