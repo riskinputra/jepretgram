@@ -14,6 +14,7 @@
     "axios": "^0.17.1",
     "jwt-decode": "^2.2.0",
     "vue": "^2.5.2",
+    "vue-img-inputer": "^1.1.5",
     "vue-router": "^3.0.1",
     "vue2-google-maps": "^0.8.4",
     "vuetify": "^0.17.6",

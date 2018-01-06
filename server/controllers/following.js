@@ -48,7 +48,6 @@ class FollowingController {
   }
 
   static countFollower(req, res) {
-    console.log('masuk')
     Following.find({followingId: req.params.id})
     .then(result => {
       res.status(200).json({

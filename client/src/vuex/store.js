@@ -98,21 +98,6 @@ export const store = new Vuex.Store({
         .catch(err => console.log(err))
       }
     },
-    addLike ({ commit }, postId) {
-      if (localStorage.getItem('token')) {
-        const token = localStorage.getItem('token')
-        const decode = jwtDecode(token)
-        const userId = decode.id
-        console.log(postId)
-        console.log(userId)
-        http.put(`/posts/like/${postId}`, {like: userId})
-        .then(({data}) => {
-          console.log('data hasil add like', data)
-          commit('saveLike', data)
-        })
-        .catch(err => console.log(err))
-      }
-    },
     getFollowing ({ commit }) {
       if (localStorage.getItem('token')) {
         const token = localStorage.getItem('token')
@@ -137,6 +122,47 @@ export const store = new Vuex.Store({
           commit('setFollowers', data)
         })
         .catch(err => console.log(err))
+      }
+    },
+    addLike ({ commit }, postId) {
+      if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        console.log(postId)
+        console.log(userId)
+        http.put(`/posts/like/${postId}`, {like: userId})
+        .then(({data}) => {
+          console.log('data hasil add like', data)
+          // commit('saveLike', data)
+        })
+        .catch(err => console.log(err))
+      }
+    },
+    addPost ({ commit }, newPost) {
+      console.log('post', newPost)
+      if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        let newData = new FormData()
+        console.log('newData', newData)
+        newData.append('description', newPost.description)
+        newData.append('image', newPost.image)
+        newData.append('userId', userId)
+        http.post(`/posts`, newData, {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        })
+        .then(({data}) => {
+          console.log('addPost', data)
+          location.reload()
+          // commit('savePost', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
     }
   }

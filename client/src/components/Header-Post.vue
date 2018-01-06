@@ -11,16 +11,6 @@
         <v-container grid-list-md>
           <v-layout wrap>
             <v-flex xs12>
-              <v-snackbar
-                v-model="snackbar"
-                :timeout="timeout"
-                :top="y"
-                absolute
-                color="blue"
-              >
-                <span>Success Add Post</span>
-                <v-icon dark>done_all</v-icon>
-              </v-snackbar>
               <header-post-form></header-post-form>
             </v-flex>
           </v-layout>
@@ -44,24 +34,8 @@
     },
     data () {
       return {
-        valid: true,
-        formUser: {
-          password: '',
-          username: '',
-          email: ''
-        },
-        passwordRules: [
-          (v) => !!v || 'Password is required'
-        ],
-        usernameRules: [
-          (v) => !!v || 'Username is required',
-          (v) => v && v.length <= 20 || 'Username must be less than 10 characters'
-        ],
-        emailRules: [
-          (v) => !!v || 'E-mail is required',
-          (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
-        ],
         dialog: false
+
       }
     }
   }
