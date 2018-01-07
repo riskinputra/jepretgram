@@ -31,7 +31,7 @@
           </v-btn>
           <p id="likes">{{item.like.length}} Likes</p>
           <v-spacer></v-spacer>
-          <v-btn icon>
+          <v-btn icon @click="comments(item._id)">
             <v-icon color="purple">comment</v-icon>
           </v-btn>
         </v-card-actions>
@@ -63,11 +63,15 @@ export default {
       'getHomeTimeline', 
       'addLike',
       'unfollowing'
-    ])
+    ]),
+    comments (postId) {
+      this.$router.replace(`/comments/${postId}`)
+    }
   },
   computed: {
     ...mapState([
-      'homeTimeline'
+      'homeTimeline',
+      'comment'
     ])
   }
 }

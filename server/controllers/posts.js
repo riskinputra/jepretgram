@@ -122,8 +122,8 @@ class PostController {
               res.status(500).send(err)
             })
           } else {
-            console.log('You already like')
-            res.status(500).send('You already like')
+            console.log('You have already like')
+            res.status(500).send('You have already like')
           }
         }
       }

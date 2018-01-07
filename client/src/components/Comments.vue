@@ -82,8 +82,9 @@
                   <b>&nbsp;{{item.userId.username}}</b>
                 </v-card-actions>
                 <v-card-text>
-                  <textarea style="width:100%;" :value="item.text">
-                  </textarea>
+                  <p style="white-space: pre-wrap;">{{item.text}}</p>
+                  <!-- <textarea style="width:100%;" :value="item.text">
+                  </textarea> -->
                 </v-card-text>
               </v-card>
             </v-flex>
