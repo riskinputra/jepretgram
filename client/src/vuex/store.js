@@ -214,7 +214,26 @@ export const store = new Vuex.Store({
           followingId: followingId
         })
         .then(({data}) => {
-          console.log('editProfile', data)
+          console.log('addFollowing', data)
+          location.replace('/')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
+    },
+    unfollowing ({ commit }, followingId) {
+      if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        http.post('/following/unfollowing', {
+          userId: userId,
+          followingId: followingId
+        })
+        .then(({data}) => {
+          console.log('unfollowing', data)
+          location.reload()
         })
         .catch(err => {
           console.log(err)

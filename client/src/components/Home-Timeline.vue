@@ -1,13 +1,25 @@
 <template>
   <v-layout row wrap id="home-timeline-list">
-    <v-flex md4 xs12 v-for="item in homeTimeline" :key="item.id">
+    <v-flex xs12 text-xs-center v-if="homeTimeline.length === 0">
       <v-card>
         <v-card-text>
+          <h1 color="blue">No Users You Follow, Please Following One !</h1>
+          <router-link to="explore">
+            <v-btn small color="warning" dark>Click Here..<v-icon right dark style="font-size:14px;">warning</v-icon></v-btn>
+          </router-link>
+        </v-card-text>
+      </v-card>
+    </v-flex>
+    <v-flex md4 xs12 v-else v-for="item in homeTimeline" :key="item.id">
+      <v-card>
+        <v-card-actions>
           <v-avatar size="36px" slot="activator">
             <img :src="item.userId.image" alt="">
           </v-avatar>
           <b>&nbsp;{{item.userId.username}}</b>
-        </v-card-text>
+          <v-spacer></v-spacer>
+          <v-btn small color="warning" dark slot="activator" @click="unfollowing(item.userId._id)">UnFollow<v-icon right dark style="font-size:12px;">content_cut</v-icon></v-btn>
+        </v-card-actions>
         <v-card-media
           :src="item.image"
           height="300px"
@@ -44,10 +56,13 @@ export default {
   },
   created () {
     this.getHomeTimeline()
+    console.log('timeline', this.homeTimeline)
   },
   methods: {
     ...mapActions([
-      'getHomeTimeline', 'addLike'
+      'getHomeTimeline', 
+      'addLike',
+      'unfollowing'
     ])
   },
   computed: {
@@ -59,5 +74,7 @@ export default {
 </script>
 
 <style scoped>
-
+  a {
+    text-decoration: none;
+  }
 </style>

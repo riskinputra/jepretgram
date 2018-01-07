@@ -13,9 +13,9 @@
         <v-icon color="cyan">public</v-icon>
       </v-btn>
     </router-link>
-    <v-btn icon>
+    <!-- <v-btn icon>
       <v-icon color="green">notifications</v-icon>
-    </v-btn>
+    </v-btn> -->
     <router-link to="profile">
       <v-btn icon>
         <v-icon color="pink">face</v-icon>

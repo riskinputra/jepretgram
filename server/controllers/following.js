@@ -35,8 +35,22 @@ class FollowingController {
     }
   }
 
-  static unFollow(req, res){
-    
+  static unFollowing(req, res){
+    if (req.body.followingId) {
+      Following.remove({
+        userId: req.body.userId,
+        followingId: req.body.followingId
+      })
+      .then(result => {
+        res.status(200).json({
+          message: 'UnFollowing Success',
+          data: result
+        })
+      })
+      .catch(err => {
+        res.status(500).send(err)
+      })
+    }
   }
 
   static countFollowing(req, res) {

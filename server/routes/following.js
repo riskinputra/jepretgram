@@ -7,3 +7,4 @@ module.exports = router
   .get('/:id', FollowingController.countFollowing)
   .get('/followers/:id', FollowingController.countFollower)
   .post('/', FollowingController.addFollowing)
+  .post('/unfollowing', FollowingController.unFollowing)
