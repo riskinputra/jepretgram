@@ -175,6 +175,33 @@ export const store = new Vuex.Store({
       .catch(err => {
         console.log(err)
       })
+    },
+    editProfile ({ commit }, profileData) {
+      console.log('postId', profileData)
+      if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        let newData = new FormData()
+        console.log('profileData', profileData)
+        newData.append('username', profileData.username)
+        newData.append('image', profileData.image)
+        newData.append('email', profileData.email)
+        newData.append('password', profileData.password)
+        http.put(`/profile/${userId}`, newData, {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        })
+        .then(({data}) => {
+          console.log('editProfile', data)
+          location.reload()
+          // commit('savePost', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
     }
   }
 })

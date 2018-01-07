@@ -98,6 +98,10 @@ class PostController {
     })
   }
 
+  static editPost(req, res) {
+    
+  }
+
   static deletePost(req, res) {
     Post.findByIdAndRemove(req.params.id)
     .then(result => {

@@ -74,6 +74,8 @@
 <script>
   import VueImgInputer from 'vue-img-inputer'
   import { mapActions, mapState } from 'vuex'
+  import axios from 'axios'
+  import jwtDecode from 'jwt-decode'
 
   export default {
     components: {
@@ -107,10 +109,18 @@
     created () {
       if (localStorage.getItem('token')) {
         this.getProfileAccount()
-        console.log(this.profileAccount)
-        this.form.username = this.profileAccount.username
-        this.form.email = this.profileAccount.email
-        this.form.password = this.profileAccount.password
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        axios.get(`http://localhost:3003/profile/${userId}`)
+        .then(result => {
+          this.form.username = result.data.data.username
+          this.form.email = result.data.data.email
+          this.form.password = result.data.data.password
+        })
+        .catch(err => {
+          consolea.log(err)
+        })
       }
     },
     computed: {

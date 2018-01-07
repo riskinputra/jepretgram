@@ -8,6 +8,7 @@ module.exports = router
   .get('/profile/:id', PostController.getPostProfile)
   .get('/follow/:id', PostController.getPostFollow)
   .put('/like/:id', PostController.postLike)
+  .put('/:id', images.multer.single('image'), images.sendUploadToGCS, PostController.editPost)
   .post('/', images.multer.single('image'), images.sendUploadToGCS, PostController.addPost)
   .delete('/:id', PostController.deletePost)
   // .put()
