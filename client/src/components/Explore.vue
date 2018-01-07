@@ -23,6 +23,11 @@ export default {
   data () {
     return {
     }
+  },
+  created () {
+    if (!localStorage.getItem('token')) {
+      this.$router.replace('/login')
+    }
   }
 }
 </script>
