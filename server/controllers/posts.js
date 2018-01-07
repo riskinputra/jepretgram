@@ -2,6 +2,21 @@ const Post         = require('../models/post')
 const Following    = require('../models/following')
 
 class PostController {
+  static getPostComments(req, res) {
+    Post.findById(req.params.id)
+    .populate('userId')
+    .exec()
+    .then(result => {
+      res.status(200).json({
+        message: 'Post Comments',
+        data: result
+      })
+    })
+    .catch(err => {
+      res.status(500).send(err)
+    })
+  }
+
   static getPost(req, res) {
     Post.find({userId: {$ne: req.params.id}}).sort( { createdAt: -1 } )
     .populate('userId')
@@ -78,20 +93,40 @@ class PostController {
   }
 
   static postLike(req, res) {
-    console.log(req.body)
     Post.findById(req.params.id)
     .then(dataLike => {
-      dataLike.like.push(req.body.like)
-      dataLike.save()
-      .then(result => {
-        res.status(200).json({
-          message: 'Success to like',
-          data: result
+      if (dataLike.like.length === 0) {
+        dataLike.like.push(req.body.like)
+        dataLike.save()
+        .then(result => {
+          res.status(200).json({
+            message: 'Success to like',
+            data: result
+          })
         })
-      })
-      .catch(err => {
-        res.status(500).send(err)
-      })
+        .catch(err => {
+          res.status(500).send(err)
+        })
+      } else {
+        for(let i = 0; i < dataLike.like.length; i++) {
+          if(dataLike.like[i] != req.body.like){
+            dataLike.like.push(req.body.like)
+            dataLike.save()
+            .then(result => {
+              res.status(200).json({
+                message: 'Success to like',
+                data: result
+              })
+            })
+            .catch(err => {
+              res.status(500).send(err)
+            })
+          } else {
+            console.log('You already like')
+            res.status(500).send('You already like')
+          }
+        }
+      }
     })
     .catch(err => {
       res.status(500).send(err)

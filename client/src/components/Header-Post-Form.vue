@@ -54,7 +54,7 @@
 
 <script>
   import VueImgInputer from 'vue-img-inputer'
-  import { mapActions, mapState } from 'vuex'
+  import { mapActions } from 'vuex'
 
   export default {
     components: {

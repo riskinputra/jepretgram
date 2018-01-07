@@ -2,7 +2,9 @@ const Comment    = require('../models/comment')
 
 class CommentController {
   static getComment(req, res){
-    Comment.find()
+    Comment.find({postId: req.params.postId})
+    .populate('userId')
+    .exec()
     .then(result => {
       res.status(200).json({
         message: 'Comments',

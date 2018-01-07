@@ -5,6 +5,7 @@ const images = require('../helpers/images')
 
 module.exports = router 
   .get('/:id', PostController.getPost)
+  .get('/comments/:id', PostController.getPostComments)
   .get('/profile/:id', PostController.getPostProfile)
   .get('/follow/:id', PostController.getPostFollow)
   .put('/like/:id', PostController.postLike)

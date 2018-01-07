@@ -3,5 +3,5 @@ const router = express.Router();
 const CommentController = require('../controllers/comments')
 
 module.exports = router 
-  .get('/', CommentController.getComment)
+  .get('/:postId', CommentController.getComment)
   .post('/', CommentController.addComment)

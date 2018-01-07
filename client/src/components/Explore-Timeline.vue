@@ -16,7 +16,7 @@
         >
         </v-card-media>
         <v-card-actions class="white">
-          <v-btn icon>
+          <v-btn @click="addLike(item._id)" icon>
             <v-icon color="red">favorite</v-icon>
           </v-btn>
           <p id="likes">{{item.like.length}} Likes</p>
@@ -50,7 +50,8 @@ export default {
   methods: {
     ...mapActions([
       'getExplore',
-      'addFollowing'
+      'addFollowing',
+      'addLike'
     ])
   },
   computed: {

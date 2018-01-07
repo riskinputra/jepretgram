@@ -17,7 +17,9 @@ export const store = new Vuex.Store({
     profileTimeline: [],
     profileAccount: [],
     followers: [],
-    following: []
+    following: [],
+    comment: [],
+    postComment: []
   },
   mutations: {
     setHomeTimeline (state, payload) {
@@ -42,6 +44,13 @@ export const store = new Vuex.Store({
     },
     setFollowers (state, payload) {
       state.followers = payload.data
+    },
+    setComments (state, payload) {
+      state.comment = payload.data
+    },
+    setPostComments (state, payload) {
+      console.log('setPostComments', payload)
+      state.postComment = payload.data
     }
   },
   actions: {
@@ -124,6 +133,23 @@ export const store = new Vuex.Store({
         .catch(err => console.log(err))
       }
     },
+    getComments ({ commit }, postId) {
+      http.get(`/comments/${postId}`)
+      .then(({ data }) => {
+        console.log('getComments', data)
+        commit('setComments', data)
+      })
+      .catch(err => console.log(err))
+    },
+    getPostComments ({ commit }, postId) {
+      // let postId = this.$route.params.id
+      http.get(`/posts/comments/${postId}`)
+      .then(({ data }) => {
+        console.log('getPostComments', data)
+        commit('setPostComments', data)
+      })
+      .catch(err => console.log(err))
+    },
     addLike ({ commit }, postId) {
       if (localStorage.getItem('token')) {
         const token = localStorage.getItem('token')
@@ -134,6 +160,7 @@ export const store = new Vuex.Store({
         http.put(`/posts/like/${postId}`, {like: userId})
         .then(({data}) => {
           console.log('data hasil add like', data)
+          location.reload()
           // commit('saveLike', data)
         })
         .catch(err => console.log(err))
@@ -233,6 +260,26 @@ export const store = new Vuex.Store({
         })
         .then(({data}) => {
           console.log('unfollowing', data)
+          location.reload()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
+    },
+    addComment ({ coomit }, comment) {
+      console.log('addcomment', comment)
+      if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        http.post('/comments', {
+          userId: userId,
+          postId: comment.postId,
+          text: comment.text
+        })
+        .then(({data}) => {
+          console.log('comment', data)
           location.reload()
         })
         .catch(err => {

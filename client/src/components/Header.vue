@@ -1,14 +1,14 @@
 <template>
   <v-toolbar id="toolbar" fixed color='white toolbar' light app absolute clipped-left>
 
-    <router-link to="Home">
+    <router-link to="/">
       <v-btn icon>
         <v-icon color="indigo">home</v-icon>
       </v-btn>
     </router-link>
     <v-toolbar-title class="text">Jepretgram</v-toolbar-title>
     <v-spacer></v-spacer>
-    <router-link to="explore">
+    <router-link to="/explore">
       <v-btn icon>
         <v-icon color="cyan">public</v-icon>
       </v-btn>
@@ -16,7 +16,7 @@
     <!-- <v-btn icon>
       <v-icon color="green">notifications</v-icon>
     </v-btn> -->
-    <router-link to="profile">
+    <router-link to="/profile">
       <v-btn icon>
         <v-icon color="pink">face</v-icon>
       </v-btn>

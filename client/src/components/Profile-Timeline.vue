@@ -13,9 +13,8 @@
           </v-btn>
           <p id="likes">{{item.like.length}} Likes</p>
           <v-spacer></v-spacer>
-          <v-btn icon>
-            <v-icon color="purple">comment</v-icon>
-          </v-btn>
+          
+          <v-btn slot="activator" icon @click="comments(item._id)"><v-icon color="purple" dark >comment</v-icon></v-btn>
           <v-btn icon @click.native.stop="dialog = true">
             <v-icon color="orange">delete_forever</v-icon>
           </v-btn>
@@ -44,24 +43,54 @@
 import { mapActions, mapState } from 'vuex'
 
 export default {
+  components: {
+    
+  },
   data () {
+    const defaultForm = Object.freeze({
+      text: '',
+      postId: ''
+    })
     return {
+      form: Object.assign({}, defaultForm),
+      rules: {
+        text: [val => (val || '').length > 0 || 'This field is required']
+      },
       show: false,
-      dialog: false
+      dialog: false,
+      // comment: false,
+      defaultForm
     }
   },
   created () {
     this.getProfileTimeline()
+    this.getComments()
+    // console.log(this.profileTimeline[0]._id)
   },
   methods: {
     ...mapActions([
       'getProfileTimeline',
-      'deletePost'
-    ])
+      'getComments',
+      'deletePost',
+      'addComment'
+    ]),
+    resetForm () {
+      this.form = Object.assign({}, this.defaultForm)
+      this.$refs.form.reset()
+    },
+    comments (postId) {
+      this.$router.replace(`/comments/${postId}`)
+    }
   },
   computed: {
+    formIsValid () {
+      return (
+        this.form.text
+      )
+    },
     ...mapState([
-      'profileTimeline'
+      'profileTimeline',
+      'comment'
     ])
   }
 }
