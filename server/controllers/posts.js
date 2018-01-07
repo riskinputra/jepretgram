@@ -20,10 +20,11 @@ class PostController {
 
   static getPostFollow(req, res) {
     Following.find({userId: req.params.id})
-    .populate('userId')
-    .populate('followingId')
-    .exec()
+    // .populate('userId')
+    // .populate('followingId')
+    // .exec()
     .then(result => {
+      // console.log(result)
       for(let i = 0; i < result.length; i++){
         Post.find({userId:result[i].followingId}).sort( { createdAt: -1 } )
         .populate('userId')
@@ -58,7 +59,6 @@ class PostController {
       res.status(500).send(err)
     })
   }
-
   static addPost(req, res) {
     let dataPost = new Post({
       userId: req.body.userId,

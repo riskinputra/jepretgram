@@ -1,6 +1,7 @@
 const mongoose        = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 const Schema          = mongoose.Schema
+const findOrCreate    = require('mongoose-findorcreate')
 
 const followingSchema = new Schema({
   userId : {
@@ -16,7 +17,7 @@ const followingSchema = new Schema({
     default   : new Date()
   }
 })
-
+followingSchema.plugin(findOrCreate)
 followingSchema.plugin(uniqueValidator, {type: 'mongoose-unique-validator'})
 const Following = mongoose.model("Following", followingSchema);
 module.exports = Following

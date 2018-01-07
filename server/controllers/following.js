@@ -1,5 +1,4 @@
 const Following    = require('../models/following')
-
 class FollowingController {
   static getFollowing(req, res) {
     Following.find()
@@ -18,20 +17,26 @@ class FollowingController {
   }
 
   static addFollowing(req, res) {
-    let dataFollowing = new Following({
-      userId: req.body.userId,
-      followingId: req.body.followingId
-    })
-    dataFollowing.save()
-    .then(result => {
-      res.status(200).json({
-        message: 'Success to add Folllowing',
-        data: result
+    console.log(req.body)
+    if (req.body.followingId) {
+      Following.findOrCreate(
+        {userId: req.body.userId},
+        {followingId: req.body.followingId}, 
+        function(err, result){
+        if(!err){  
+          res.status(200).json({
+            message: 'Success to Following',
+            data: result
+          })
+        } else {
+          res.status(500).send(err)
+        }  
       })
-    })
-    .catch(err => {
-      res.status(500).send(err)
-    })
+    }
+  }
+
+  static unFollow(req, res){
+    
   }
 
   static countFollowing(req, res) {
