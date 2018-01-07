@@ -77,7 +77,7 @@ export default {
     ...mapState([
       'exploreTimeline'
     ]),
-    filteredList() {
+    filteredList () {
       return this.exploreTimeline.filter(post => {
         return post.userId.username.toLowerCase().includes(this.search.toLowerCase())
       })

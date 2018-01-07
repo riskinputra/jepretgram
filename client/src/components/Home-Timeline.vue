@@ -57,7 +57,6 @@ export default {
   },
   created () {
     this.getHomeTimeline()
-    console.log('timeline', this.homeTimeline)
   },
   methods: {
     ...mapActions([

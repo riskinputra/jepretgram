@@ -44,7 +44,6 @@ export default {
   },
   created () {
     let userId = this.$route.params.userId
-    console.log()
     this.getProfileAccountOther(userId)
     this.getProfileTimelineOther(userId)
     this.getFollowingOther(userId)

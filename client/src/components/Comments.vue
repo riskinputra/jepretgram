@@ -121,7 +121,6 @@ export default {
   },
   created () {
     let id = this.$route.params.id
-    // console.log(id)
     this.getPostComments(id)
     this.getComments(id)
   },

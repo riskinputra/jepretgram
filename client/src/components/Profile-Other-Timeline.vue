@@ -50,7 +50,6 @@ export default {
   created () {
     let userId = this.$route.params.userId
     this.getProfileTimelineOther(userId)
-    // console.log(this.profileTimeline[0]._id)
   },
   methods: {
     ...mapActions([

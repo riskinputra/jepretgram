@@ -72,7 +72,6 @@ export default {
           password: this.password
         })
         .then(result => {
-          console.log(result.data)
           localStorage.setItem('token', result.data.token)
           this.$router.replace('/')
         })

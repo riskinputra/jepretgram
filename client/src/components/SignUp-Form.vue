@@ -81,7 +81,6 @@ export default {
           password: this.password
         })
         .then(result => {
-          console.log(result.data)
           this.$router.replace('/login')
         })
         .catch(err => {

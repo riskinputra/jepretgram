@@ -33,12 +33,6 @@ export default {
   },
   data () {
     return {}
-  },
-  methods: {
-    // explore () {
-    //   console.log('masuk')
-    //   this.$router.replace('/explore')
-    // }
   }
 }
 </script>

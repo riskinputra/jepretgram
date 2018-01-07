@@ -62,7 +62,6 @@ export default {
   },
   created () {
     this.getProfileTimeline()
-    // console.log(this.profileTimeline[0]._id)
   },
   methods: {
     ...mapActions([
