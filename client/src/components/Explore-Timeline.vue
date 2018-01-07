@@ -1,6 +1,17 @@
 <template>
   <v-layout row wrap id="home-timeline-list">
-    <v-flex md4 xs12 v-for="item in exploreTimeline" :key="item.id">
+    <v-flex xs12>
+      <v-text-field
+        light
+        solo
+        v-model="search"
+        prepend-icon="search"
+        placeholder="Search Username"
+        style="width: 100%; min-width: 128px"
+      ></v-text-field>
+      <v-divider></v-divider>
+    </v-flex>
+    <v-flex md4 xs12 v-for="item in filteredList" :key="item.id">
       <v-card>
         <v-card-actions>
           <v-avatar size="36px" slot="activator">
@@ -29,9 +40,8 @@
         </v-card-actions>
         <v-divider></v-divider>
         <v-card-text>
-           <b>{{item.userId.username}}&nbsp;</b>
-            {{item.caption}}
-          </v-card-text>
+          <p style="white-space: pre-wrap;"><b>{{item.userId.username}}&nbsp;</b> {{item.caption}}</p>
+        </v-card-text>
       </v-card>
     </v-flex>
   </v-layout>
@@ -43,7 +53,8 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data () {
     return {
-      show: false
+      show: false,
+      search: ''
     }
   },
   created () {
@@ -65,7 +76,12 @@ export default {
   computed: {
     ...mapState([
       'exploreTimeline'
-    ])
+    ]),
+    filteredList() {
+      return this.exploreTimeline.filter(post => {
+        return post.userId.username.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
   }
 }
 </script>

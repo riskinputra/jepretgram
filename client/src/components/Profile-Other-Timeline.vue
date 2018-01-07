@@ -18,9 +18,8 @@
         </v-card-actions>
         <v-divider></v-divider>
         <v-card-text>
-           <b>{{item.userId.username}}&nbsp;</b>
-            {{item.caption}}
-          </v-card-text>
+          <p style="white-space: pre-wrap;"><b>{{item.userId.username}}&nbsp;</b> {{item.caption}}</p>
+        </v-card-text>
       </v-card>
     </v-flex>
   </v-layout>
