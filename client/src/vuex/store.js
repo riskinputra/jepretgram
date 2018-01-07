@@ -202,6 +202,24 @@ export const store = new Vuex.Store({
           console.log(err)
         })
       }
+    },
+    addFollowing ({ commit }, followingId) {
+      console.log('followingId', followingId)
+      if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        const decode = jwtDecode(token)
+        const userId = decode.id
+        http.post('/following', {
+          userId: userId,
+          followingId: followingId
+        })
+        .then(({data}) => {
+          console.log('editProfile', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
     }
   }
 })

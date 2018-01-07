@@ -2,12 +2,14 @@
   <v-layout row wrap id="home-timeline-list">
     <v-flex md4 xs12 v-for="item in exploreTimeline" :key="item.id">
       <v-card>
-        <v-card-text>
+        <v-card-actions>
           <v-avatar size="36px" slot="activator">
             <img :src="item.userId.image" alt="">
           </v-avatar>
           <b>&nbsp;{{item.userId.username}}</b>
-        </v-card-text>
+          <v-spacer></v-spacer>
+          <v-btn small color="primary" dark slot="activator" @click="addFollowing(item.userId._id)">Follow<v-icon right dark style="font-size:12px;">done_all</v-icon></v-btn>
+        </v-card-actions>
         <v-card-media
           :src="item.image"
           height="300px"
@@ -47,7 +49,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getExplore'
+      'getExplore',
+      'addFollowing'
     ])
   },
   computed: {
