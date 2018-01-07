@@ -96,7 +96,7 @@ export default {
   },
   computed: {
     ...mapState([
-      'profileAccount', 
+      'profileAccount',
       'profileTimeline',
       'followers',
       'following'

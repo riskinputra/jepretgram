@@ -94,9 +94,9 @@
         rules: {
           username: [val => (val || '').length > 0 || 'This field is required'],
           password: [val => (val || '').length > 0 || 'This field is required'],
-          emailRules: [ 
+          emailRules: [
             (v) => !!v || 'E-mail is required',
-            (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid' 
+            (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
           ],
           image: [val => (val || '').length > 0 || 'This field is required']
         },
@@ -119,7 +119,7 @@
           this.form.password = result.data.data.password
         })
         .catch(err => {
-          consolea.log(err)
+          console.log(err)
         })
       }
     },

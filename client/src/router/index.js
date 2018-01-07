@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import Explore from '@/components/Explore'
 import Profile from '@/components/Profile'
+import ProfileOther from '@/components/Profile-Other'
 import Comments from '@/components/Comments'
 
 Vue.use(Router)
@@ -40,6 +41,11 @@ export default new Router({
       path: '/profile',
       name: 'Profile',
       component: Profile
+    },
+    {
+      path: '/profile-other/:userId',
+      name: 'ProfileOther',
+      component: ProfileOther
     },
     {
       path: '/comments/:id',

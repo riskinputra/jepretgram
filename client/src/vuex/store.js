@@ -19,7 +19,11 @@ export const store = new Vuex.Store({
     followers: [],
     following: [],
     comment: [],
-    postComment: []
+    postComment: [],
+    profileTimelineOther: [],
+    profileAccountOther: [],
+    followersOther: [],
+    followingOther: []
   },
   mutations: {
     setHomeTimeline (state, payload) {
@@ -51,6 +55,20 @@ export const store = new Vuex.Store({
     setPostComments (state, payload) {
       console.log('setPostComments', payload)
       state.postComment = payload.data
+    },
+    setProfileAccountOther (state, payload) {
+      state.profileAccountOther = payload.data
+      console.log('setProfileAccount', state.profileAccountOther)
+    },
+    setProfileTimelineOther (state, payload) {
+      state.profileTimelineOther = payload.data
+      console.log('profileTimelineOther', state.profileTimelineOther)
+    },
+    setFollowingOther (state, payload) {
+      state.followingOther = payload.data
+    },
+    setFollowersOther (state, payload) {
+      state.followersOther = payload.data
     }
   },
   actions: {
@@ -107,6 +125,22 @@ export const store = new Vuex.Store({
         .catch(err => console.log(err))
       }
     },
+    getProfileAccountOther ({ commit }, userId) {
+      http.get(`/profile/${userId}`)
+      .then(({ data }) => {
+        console.log('getProfileAccountOther', data)
+        commit('setProfileAccountOther', data)
+      })
+      .catch(err => console.log(err))
+    },
+    getProfileTimelineOther ({ commit }, userId) {
+      http.get(`/posts/profile/${userId}`)
+      .then(({ data }) => {
+        console.log('getProfileTimelineOther', data)
+        commit('setProfileTimelineOther', data)
+      })
+      .catch(err => console.log(err))
+    },
     getFollowing ({ commit }) {
       if (localStorage.getItem('token')) {
         const token = localStorage.getItem('token')
@@ -120,6 +154,14 @@ export const store = new Vuex.Store({
         .catch(err => console.log(err))
       }
     },
+    getFollowingOther ({ commit }, userId) {
+      http.get(`/following/${userId}`)
+      .then(({ data }) => {
+        console.log('getFollowingOther', data)
+        commit('setFollowingOther', data)
+      })
+      .catch(err => console.log(err))
+    },
     getFollowers ({ commit }) {
       if (localStorage.getItem('token')) {
         const token = localStorage.getItem('token')
@@ -132,6 +174,14 @@ export const store = new Vuex.Store({
         })
         .catch(err => console.log(err))
       }
+    },
+    getFollowersOther ({ commit }, userId) {
+      http.get(`/following/followers/${userId}`)
+      .then(({ data }) => {
+        console.log('getFollowersOther', data)
+        commit('setFollowersOther', data)
+      })
+      .catch(err => console.log(err))
     },
     getComments ({ commit }, postId) {
       http.get(`/comments/${postId}`)
@@ -155,8 +205,6 @@ export const store = new Vuex.Store({
         const token = localStorage.getItem('token')
         const decode = jwtDecode(token)
         const userId = decode.id
-        console.log(postId)
-        console.log(userId)
         http.put(`/posts/like/${postId}`, {like: userId})
         .then(({data}) => {
           console.log('data hasil add like', data)

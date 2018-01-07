@@ -6,7 +6,9 @@
           <v-avatar size="36px" slot="activator">
             <img :src="item.userId.image" alt="">
           </v-avatar>
-          <b>&nbsp;{{item.userId.username}}</b>
+          <v-btn small @click="profileOther(item.userId._id)">
+            &nbsp;{{item.userId.username}}
+          </v-btn>
           <v-spacer></v-spacer>
           <v-btn small color="primary" dark slot="activator" @click="addFollowing(item.userId._id)">Follow<v-icon right dark style="font-size:12px;">done_all</v-icon></v-btn>
         </v-card-actions>
@@ -55,6 +57,9 @@ export default {
     ]),
     comments (postId) {
       this.$router.replace(`/comments/${postId}`)
+    },
+    profileOther (userId) {
+      this.$router.replace(`/profile-other/${userId}`)
     }
   },
   computed: {
