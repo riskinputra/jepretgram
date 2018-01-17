@@ -6,7 +6,7 @@ import jwtDecode from 'jwt-decode'
 Vue.use(Vuex)
 
 const http = axios.create({
-  baseURL: 'http://localhost:3003'
+  baseURL: 'http://35.197.159.250:3003'
 })
 
 export const store = new Vuex.Store({

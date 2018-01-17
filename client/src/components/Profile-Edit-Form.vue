@@ -114,7 +114,7 @@
         const token = localStorage.getItem('token')
         const decode = jwtDecode(token)
         const userId = decode.id
-        axios.get(`http://localhost:3003/profile/${userId}`)
+        axios.get(`http://35.197.159.250:3003/profile/${userId}`)
         .then(result => {
           this.form.username = result.data.data.username
           this.form.email = result.data.data.email
