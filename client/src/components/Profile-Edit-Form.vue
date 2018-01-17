@@ -96,7 +96,9 @@
           password: [val => (val || '').length > 0 || 'This field is required'],
           emailRules: [
             (v) => !!v || 'E-mail is required',
+            /* eslint-disable */
             (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+            /* eslint-enable */
           ],
           image: [val => (val || '').length > 0 || 'This field is required']
         },
@@ -112,7 +114,7 @@
         const token = localStorage.getItem('token')
         const decode = jwtDecode(token)
         const userId = decode.id
-        axios.get(`http://35.197.159.250:3003/profile/${userId}`)
+        axios.get(`http://localhost:3003/profile/${userId}`)
         .then(result => {
           this.form.username = result.data.data.username
           this.form.email = result.data.data.email

@@ -6,13 +6,14 @@ import jwtDecode from 'jwt-decode'
 Vue.use(Vuex)
 
 const http = axios.create({
-  baseURL: 'http://35.197.159.250:3003'
+  baseURL: 'http://localhost:3003'
 })
 
 export const store = new Vuex.Store({
   strict: true,
   state: {
     homeTimeline: [],
+    postFollow: [],
     exploreTimeline: [],
     profileTimeline: [],
     profileAccount: [],
@@ -27,7 +28,8 @@ export const store = new Vuex.Store({
   },
   mutations: {
     setHomeTimeline (state, payload) {
-      state.homeTimeline = payload.data
+      state.homeTimeline = payload
+      console.log('setHomeTimeline ono', state.homeTimeline)
     },
     setExplore (state, payload) {
       state.exploreTimeline = payload.data
@@ -61,9 +63,41 @@ export const store = new Vuex.Store({
     },
     setFollowersOther (state, payload) {
       state.followersOther = payload.data
+    },
+    setPostFollow (state, payload) {
+      let following = state.homeTimeline
+      for (let i = 0; i < following.length; i++) {
+        for (let j = 0; j < payload.length; j++) {
+          if (state.homeTimeline[i].followingId === payload[j].userId._id) {
+            state.postFollow.push(payload[j])
+            console.log('postFollow ini', state.postFollow)
+          }
+        }
+      }
     }
   },
   actions: {
+    registerUser ({ commit }, payload) {
+      http.post('/signup', payload)
+      .then(({ data }) => {
+        console.log(data)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    },
+    loginUser ({ commit }, payload) {
+      // console.log(payload)
+      http.post('/signin', payload)
+      .then(({data}) => {
+        console.log(data.token)
+        localStorage.setItem('token', data.token)
+        location.reload()
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    },
     getHomeTimeline ({ commit }) {
       if (localStorage.getItem('token')) {
         const token = localStorage.getItem('token')
@@ -71,7 +105,8 @@ export const store = new Vuex.Store({
         const userId = decode.id
         http.get(`/posts/follow/${userId}`)
         .then(({ data }) => {
-          commit('setHomeTimeline', data)
+          console.log('getHomeTimeline', data.data)
+          commit('setHomeTimeline', data.data)
         })
         .catch(err => console.log(err))
       }
@@ -83,6 +118,8 @@ export const store = new Vuex.Store({
         const userId = decode.id
         http.get(`/posts/${userId}`)
         .then(({ data }) => {
+          console.log('explore', data)
+          commit('setPostFollow', data.data)
           commit('setExplore', data)
         })
         .catch(err => console.log(err))
@@ -254,6 +291,7 @@ export const store = new Vuex.Store({
           followingId: followingId
         })
         .then(({data}) => {
+          console.log('addFolllowing', data)
           location.replace('/')
         })
         .catch(err => {

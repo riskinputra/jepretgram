@@ -13,20 +13,20 @@
     <v-form v-model="valid" ref="form" lazy-validation>
       <v-text-field
         label="Username"
-        v-model="username"
+        v-model="form.username"
         :rules="usernameRules"
         required
       ></v-text-field>
       <v-text-field
         label="E-mail"
-        v-model="email"
+        v-model="form.email"
         :rules="emailRules"
         required
       ></v-text-field>
       <v-text-field
         name="input-10-1"
         label="Password"
-        v-model="password"
+        v-model="form.password"
         required
         :rules="passwordRules"
         :append-icon="e1 ? 'visibility' : 'visibility_off'"
@@ -34,7 +34,7 @@
         :type="e1 ? 'password' : 'text'"
       ></v-text-field>
       <v-btn
-        @click.native="submit"
+        @click.native="submit(form)"
         :disabled="!valid"
       >
         submit
@@ -45,23 +45,27 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   data () {
     return {
       e1: false,
       valid: true,
-      password: '',
+      form: {
+        password: '',
+        email: '',
+        username: ''
+      },
       passwordRules: [
         (v) => !!v || 'Password is required'
       ],
-      email: '',
+      /* eslint-disable */
       emailRules: [
         (v) => !!v || 'E-mail is required',
+        // eslint-disable-next-line 
         (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
       ],
-      username: '',
+      /* eslint-enable */
       usernameRules: [
         (v) => !!v || 'Username is required'
       ],
@@ -72,20 +76,10 @@ export default {
     }
   },
   methods: {
-    submit () {
+    submit (data) {
       if (this.$refs.form.validate()) {
-        // Native form submission is not yet supported
-        axios.post('http://35.197.159.250:3003/signup', {
-          username: this.username,
-          email: this.email,
-          password: this.password
-        })
-        .then(result => {
-          this.$router.replace('/login')
-        })
-        .catch(err => {
-          console.log(err)
-        })
+        this.$store.dispatch('registerUser', data)
+        this.$router.push('/login')
       }
     },
     clear () {

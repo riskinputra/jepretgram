@@ -4,6 +4,7 @@ const PostController = require('../controllers/posts')
 const images = require('../helpers/images')
 
 module.exports = router 
+  .get('/', PostController.getAllPosts)
   .get('/:id', PostController.getPost)
   .get('/comments/:id', PostController.getPostComments)
   .get('/profile/:id', PostController.getPostProfile)

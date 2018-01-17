@@ -2,6 +2,16 @@ const User    = require('../models/user')
 const bcrypt  = require('bcryptjs')
 
 class ProfileController {
+  static getAllProfile(req, res) {
+    User.find()
+    .then(result => {
+      res.status(200).json({
+        message: 'All Profile',
+        data: result
+      })
+    })
+  }
+
   static getProfile(req, res) {
     User.findById(req.params.id)
     .then(result => {

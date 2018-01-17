@@ -13,14 +13,14 @@
     <v-form v-model="valid" ref="form" lazy-validation>
       <v-text-field
         label="E-mail"
-        v-model="email"
+        v-model="from.email"
         :rules="emailRules"
         required
       ></v-text-field>
       <v-text-field
         name="input-10-1"
         label="Password"
-        v-model="password"
+        v-model="from.password"
         required
         :rules="passwordRules"
         :append-icon="e1 ? 'visibility' : 'visibility_off'"
@@ -28,7 +28,7 @@
         :type="e1 ? 'password' : 'text'"
       ></v-text-field>
       <v-btn
-        @click.native="submit"
+        @click.native="submit(from)"
         :disabled="!valid"
       >
         submit
@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   data () {
@@ -47,11 +46,13 @@ export default {
     return {
       e1: false,
       valid: true,
-      password: '',
+      from: {
+        email: '',
+        password: ''
+      },
       passwordRules: [
         (v) => !!v || 'Password is required'
       ],
-      email: '',
       emailRules: [
         (v) => !!v || 'E-mail is required',
         (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
@@ -64,22 +65,10 @@ export default {
     /* eslint-enable no-alert, no-console */
   },
   methods: {
-    submit () {
+    submit (data) {
       if (this.$refs.form.validate()) {
-        // Native form submission is not yet supported
-        axios.post('http://35.197.159.250:3003/signin', {
-          email: this.email,
-          password: this.password
-        })
-        .then(result => {
-          localStorage.setItem('token', result.data.token)
-          this.$router.replace('/')
-        })
-        .catch(err => {
-          this.msgError = 'E-mail or Password Wrong !!! Please Try Again !'
-          this.snackbar = true
-          console.log(err)
-        })
+        this.$store.dispatch('loginUser', data)
+        this.$router.push('/')
       }
     },
     clear () {

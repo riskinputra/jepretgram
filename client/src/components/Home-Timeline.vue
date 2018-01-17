@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap id="home-timeline-list">
-    <v-flex xs12 text-xs-center v-if="homeTimeline.length === 0">
+    <v-flex xs12 text-xs-center v-if="postFollow.length === 0">
       <v-card>
         <v-card-text>
           <h1 color="blue">No Users You Follow, Please Following One !</h1>
@@ -10,7 +10,7 @@
         </v-card-text>
       </v-card>
     </v-flex>
-    <v-flex md4 xs12 v-else v-for="item in homeTimeline" :key="item.id">
+    <v-flex md4 xs12 v-else v-for="item in postFollow" :key="item.id">
       <v-card>
         <v-card-actions>
           <v-avatar size="36px" slot="activator">
@@ -57,11 +57,16 @@ export default {
   },
   created () {
     this.getHomeTimeline()
+    this.getExplore()
+  },
+  mounted: function () {
+    this.getHomeTimeline()
   },
   methods: {
     ...mapActions([
       'getHomeTimeline',
       'addLike',
+      'getExplore',
       'unfollowing'
     ]),
     comments (postId) {
@@ -74,7 +79,8 @@ export default {
   computed: {
     ...mapState([
       'homeTimeline',
-      'comment'
+      'comment',
+      'postFollow'
     ])
   }
 }

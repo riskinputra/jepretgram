@@ -17,11 +17,10 @@ class FollowingController {
   }
 
   static addFollowing(req, res) {
-    console.log(req.body)
     if (req.body.followingId) {
       Following.findOrCreate(
-        {userId: req.body.userId},
-        {followingId: req.body.followingId}, 
+        {userId: req.body.userId,
+        followingId: req.body.followingId}, 
         function(err, result){
         if(!err){  
           res.status(200).json({
